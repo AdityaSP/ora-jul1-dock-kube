@@ -1,0 +1,772 @@
+login as: docker
+docker@192.168.99.152's password:
+                         _             _
+            _         _ ( )           ( )
+  ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __
+/' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
+| ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
+(_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
+
+$ ls
+$ pwd
+/home/docker
+$ id
+uid=1001(docker) gid=1001(docker) groups=1001(docker),10(wheel),1000(rkt),1015(r                kt-admin),1016(vboxsf)
+$ ps -ef | grep dockerd
+root      2402     1  6 04:48 ?        00:03:00 /usr/bin/dockerd -H tcp://0.0.0.                0:2376 -H unix:///var/run/docker.sock --tlsverify --tlscacert /etc/docker/ca.pem                 --tlscert /etc/docker/server.pem --tlskey /etc/docker/server-key.pem --label pr                ovider=virtualbox --insecure-registry 10.96.0.0/12
+docker   16075 14495  0 05:36 pts/0    00:00:00 grep dockerd
+$ ps -ef | grep localkube
+root      3409     1 22 04:49 ?        00:10:45 /usr/local/bin/localkube --dns-d                omain=cluster.local --node-ip=192.168.99.152 --generate-certs=false --logtostder                r=true --enable-dns=false
+docker   16142 14495  0 05:36 pts/0    00:00:00 grep localkube
+$ docker version
+Client:
+ Version:      17.09.0-ce
+ API version:  1.32
+ Go version:   go1.8.3
+ Git commit:   afdb6d4
+ Built:        Tue Sep 26 22:39:28 2017
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      17.09.0-ce
+ API version:  1.32 (minimum version 1.12)
+ Go version:   go1.8.3
+ Git commit:   afdb6d4
+ Built:        Tue Sep 26 22:45:38 2017
+ OS/Arch:      linux/amd64
+ Experimental: false
+$
+$ ifconfig
+br-c79b36e04052 Link encap:Ethernet  HWaddr 02:42:D9:88:87:67
+          inet addr:172.18.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+docker0   Link encap:Ethernet  HWaddr 02:42:AF:28:16:0C
+          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          inet6 addr: fe80::42:afff:fe28:160c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:50422 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:51904 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:6936520 (6.6 MiB)  TX bytes:120386886 (114.8 MiB)
+
+eth0      Link encap:Ethernet  HWaddr 08:00:27:32:6C:A6
+          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fe32:6ca6/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:209620 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:17820 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:299367270 (285.4 MiB)  TX bytes:1252656 (1.1 MiB)
+
+eth1      Link encap:Ethernet  HWaddr 08:00:27:6E:3F:40
+          inet addr:192.168.99.152  Bcast:192.168.99.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fe6e:3f40/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:998 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:220 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:85384 (83.3 KiB)  TX bytes:28695 (28.0 KiB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:247244 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:247244 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1
+          RX bytes:167238123 (159.4 MiB)  TX bytes:167238123 (159.4 MiB)
+
+veth06bc1d9 Link encap:Ethernet  HWaddr 2E:D2:0C:BE:2F:61
+          inet6 addr: fe80::2cd2:cff:febe:2f61/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1125 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1152 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:250958 (245.0 KiB)  TX bytes:548185 (535.3 KiB)
+
+veth3239a0c Link encap:Ethernet  HWaddr 1E:81:3A:2A:85:24
+          inet6 addr: fe80::1c81:3aff:fe2a:8524/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4633 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4831 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:556396 (543.3 KiB)  TX bytes:6833103 (6.5 MiB)
+
+veth9683fe1 Link encap:Ethernet  HWaddr 5E:C0:F5:2B:44:A6
+          inet6 addr: fe80::5cc0:f5ff:fe2b:44a6/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2416 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3358 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:177023 (172.8 KiB)  TX bytes:29450775 (28.0 MiB)
+
+veth9705876 Link encap:Ethernet  HWaddr 72:A1:45:EF:0F:36
+          inet6 addr: fe80::70a1:45ff:feef:f36/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4123 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4391 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:12860760 (12.2 MiB)  TX bytes:6755411 (6.4 MiB)
+
+veth97cd6d8 Link encap:Ethernet  HWaddr EE:97:BC:92:A7:B3
+          inet6 addr: fe80::ec97:bcff:fe92:a7b3/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4784 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4741 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:17131342 (16.3 MiB)  TX bytes:21531885 (20.5 MiB)
+
+veth9fb31b8 Link encap:Ethernet  HWaddr F6:7D:E0:29:AF:C9
+          inet6 addr: fe80::f47d:e0ff:fe29:afc9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2862 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3178 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:249558 (243.7 KiB)  TX bytes:285464 (278.7 KiB)
+
+vetha0184a8 Link encap:Ethernet  HWaddr 4A:BC:0E:52:5F:95
+          inet6 addr: fe80::48bc:eff:fe52:5f95/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:318 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:350 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:26022 (25.4 KiB)  TX bytes:78954 (77.1 KiB)
+
+vetha674969 Link encap:Ethernet  HWaddr C2:D7:06:32:34:78
+          inet6 addr: fe80::c0d7:6ff:fe32:3478/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:18 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:65 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1436 (1.4 KiB)  TX bytes:4616 (4.5 KiB)
+
+vethab438b7 Link encap:Ethernet  HWaddr 12:3C:30:84:AF:1F
+          inet6 addr: fe80::103c:30ff:fe84:af1f/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:17608 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:17207 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:2637761 (2.5 MiB)  TX bytes:80424262 (76.6 MiB)
+
+vethb32cc63 Link encap:Ethernet  HWaddr BA:D0:B6:09:E2:63
+          inet6 addr: fe80::b8d0:b6ff:fe09:e263/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1427 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1586 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:136945 (133.7 KiB)  TX bytes:141477 (138.1 KiB)
+
+vethdbea051 Link encap:Ethernet  HWaddr 46:9E:DD:A8:4F:55
+          inet6 addr: fe80::449e:ddff:fea8:4f55/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:8098 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8424 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:2234701 (2.1 MiB)  TX bytes:1421551 (1.3 MiB)
+
+vethe4fef00 Link encap:Ethernet  HWaddr F6:9D:15:DC:A0:AD
+          inet6 addr: fe80::f49d:15ff:fedc:a0ad/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:8400 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8506 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:910057 (888.7 KiB)  TX bytes:2929983 (2.7 MiB)
+
+vethee26b6a Link encap:Ethernet  HWaddr DE:10:75:98:69:FC
+          inet6 addr: fe80::dc10:75ff:fe98:69fc/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:907 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1018 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:520348 (508.1 KiB)  TX bytes:236413 (230.8 KiB)
+
+vethfaaf1cd Link encap:Ethernet  HWaddr DE:60:29:6F:4C:D8
+          inet6 addr: fe80::dc60:29ff:fe6f:4cd8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1740 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1858 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:353806 (345.5 KiB)  TX bytes:194642 (190.0 KiB)
+
+$ ps -ef | grep dockerd
+root      2402     1  6 04:48 ?        00:06:38 /usr/bin/dockerd -H tcp://0.0.0.                0:2376 -H unix:///var/run/docker.sock --tlsverify --tlscacert /etc/docker/ca.pem                 --tlscert /etc/docker/server.pem --tlskey /etc/docker/server-key.pem --label pr                ovider=virtualbox --insecure-registry 10.96.0.0/12
+docker   26505 14495  0 06:34 pts/0    00:00:00 grep dockerd
+$
+$ export PS1='$PWD> '
+/home/docker> docker
+
+Usage:  docker COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default
+                           "/home/docker/.docker")
+  -D, --debug              Enable debug mode
+      --help               Print usage
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level
+                           ("debug"|"info"|"warn"|"error"|"fatal")
+                           (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default
+                           "/home/docker/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default
+                           "/home/docker/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default
+                           "/home/docker/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Management Commands:
+  config      Manage Docker configs
+  container   Manage containers
+  image       Manage images
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a runnin                g container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesyste                m
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by de                fault)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit cod                es
+
+Run 'docker COMMAND --help' for more information on a command.
+/home/docker>
+/home/docker> docker container ls
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+5d3c7c64eaa3        quay.io/kubernetes-ingress-controller/nginx-ingress-controller   "/usr/bin/dumb-ini..."   3 hours ago         Up 3 hours                                                                               k8s_nginx-ingress-controller_nginx-ingress-controller-zjd74_kube-system_ab42b3da-2f94-11e9-8d17-080027326ca6_480
+d9089b8d199a        k8s.gcr.io/heapster-grafana-amd64                                "/run.sh"                3 hours ago         Up 3 hours                                                                               k8s_grafana_influxdb-grafana-tx55c_kube-system_ab1bc183-2f94-11e9-8d17-080027326ca6_78
+74a041930f32        k8s.gcr.io/k8s-dns-sidecar-amd64                                 "/sidecar --v=2 --..."   3 hours ago         Up 3 hours                                                                               k8s_sidecar_kube-dns-54cccfbdf8-fm9cn_kube-system_cfc65d88-77aa-11e9-bc85-080027326ca6_28
+4e492565b714        k8s.gcr.io/defaultbackend                                        "/server"                3 hours ago         Up 3 hours                                                                               k8s_default-http-backend_default-http-backend-cvzhd_kube-system_ab6b020b-2f94-11e9-8d17-080027326ca6_285
+151aa3e54505        k8s.gcr.io/kubernetes-dashboard-amd64                            "/dashboard --inse..."   3 hours ago         Up 3 hours                                                                               k8s_kubernetes-dashboard_kubernetes-dashboard-77d8b98585-mftdb_kube-system_1806d17c-804a-11e9-a140-080027326ca6_27
+b0b91f0feff0        k8s.gcr.io/heapster-influxdb-amd64                               "influxd --config ..."   3 hours ago         Up 3 hours                                                                               k8s_influxdb_influxdb-grafana-tx55c_kube-system_ab1bc183-2f94-11e9-8d17-080027326ca6_82
+2d7ba7d9a694        gcr.io/kubernetes-helm/tiller                                    "/tiller"                3 hours ago         Up 3 hours                                                                               k8s_tiller_tiller-deploy-5b7c59888b-6rbgl_kube-system_42cc5a34-3c10-11e9-a9d7-080027326ca6_317
+9c0da543fdf1        k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64                           "/dnsmasq-nanny -v..."   3 hours ago         Up 3 hours                                                                               k8s_dnsmasq_kube-dns-54cccfbdf8-fm9cn_kube-system_cfc65d88-77aa-11e9-bc85-080027326ca6_28
+bffdceac9668        k8s.gcr.io/heapster-grafana-amd64                                "/run.sh"                3 hours ago         Up 3 hours                                                                               k8s_grafana_monitoring-grafana-65757b9656-h4fbs_kube-system_abcaee65-2f94-11e9-8d17-080027326ca6_77
+2ed0d8213669        k8s.gcr.io/heapster-influxdb-amd64                               "influxd --config ..."   3 hours ago         Up 3 hours                                                                               k8s_influxdb_monitoring-influxdb-66946c9f58-h5lhw_kube-system_abf955f0-2f94-11e9-8d17-080027326ca6_80
+1220fa093126        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_influxdb-grafana-tx55c_kube-system_ab1bc183-2f94-11e9-8d17-080027326ca6_78
+93468607cb12        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_tiller-deploy-5b7c59888b-6rbgl_kube-system_42cc5a34-3c10-11e9-a9d7-080027326ca6_70
+24061a6b705a        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_default-http-backend-cvzhd_kube-system_ab6b020b-2f94-11e9-8d17-080027326ca6_79
+ab4ef1d8976e        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_kubernetes-dashboard-77d8b98585-mftdb_kube-system_1806d17c-804a-11e9-a140-080027326ca6_18
+d16799103236        k8s.gcr.io/k8s-dns-kube-dns-amd64                                "/kube-dns --domai..."   3 hours ago         Up 3 hours                                                                               k8s_kubedns_kube-dns-54cccfbdf8-fm9cn_kube-system_cfc65d88-77aa-11e9-bc85-080027326ca6_27
+d392d9950044        prom/prometheus                                                  "/bin/prometheus -..."   3 hours ago         Up 3 hours                                                                               k8s_prometheus_prometheus-deployment-79c7cf44fc-xdj6l_monitoring_ed3806b7-803f-11e9-a140-080027326ca6_18
+19d126c6f637        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_monitoring-grafana-65757b9656-h4fbs_kube-system_abcaee65-2f94-11e9-8d17-080027326ca6_77
+f7cedf554dbd        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_monitoring-influxdb-66946c9f58-h5lhw_kube-system_abf955f0-2f94-11e9-8d17-080027326ca6_77
+1a230cdd71fb        gcr.io/google_containers/metrics-server-amd64                    "/metrics-server -..."   3 hours ago         Up 3 hours                                                                               k8s_metrics-server_metrics-server-bb9ffc6b8-c4bsh_kube-system_ac742fe8-2f94-11e9-8d17-080027326ca6_11
+a7d2f4fad19f        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours          0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 0.0.0.0:18080->18080/tcp   k8s_POD_nginx-ingress-controller-zjd74_kube-system_ab42b3da-2f94-11e9-8d17-080027326ca6_77
+e376b29fc8de        k8s.gcr.io/heapster-amd64                                        "/heapster --sourc..."   3 hours ago         Up 3 hours                                                                               k8s_heapster_heapster-546c9964c6-2w8ld_kube-system_ac314ae9-2f94-11e9-8d17-080027326ca6_78
+45bd8bdb1eb1        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_kube-dns-54cccfbdf8-fm9cn_kube-system_cfc65d88-77aa-11e9-bc85-080027326ca6_25
+aabde088d88e        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_prometheus-deployment-79c7cf44fc-xdj6l_monitoring_ed3806b7-803f-11e9-a140-080027326ca6_18
+62773cfed881        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_heapster-546c9964c6-2w8ld_kube-system_ac314ae9-2f94-11e9-8d17-080027326ca6_77
+56f9a9321168        k8s.gcr.io/heapster-amd64                                        "/heapster --sourc..."   3 hours ago         Up 3 hours                                                                               k8s_heapster_heapster-xnbjb_kube-system_aafb3c7c-2f94-11e9-8d17-080027326ca6_78
+9f9c6341f555        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_heapster-xnbjb_kube-system_aafb3c7c-2f94-11e9-8d17-080027326ca6_77
+ec1704eedcde        gcr.io/google-containers/kube-addon-manager                      "/opt/kube-addons.sh"    3 hours ago         Up 3 hours                                                                               k8s_kube-addon-manager_kube-addon-manager-minikube_kube-system_c4c3188325a93a2d7fb1714e1abf1259_81
+475b817e4c48        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_metrics-server-bb9ffc6b8-c4bsh_kube-system_ac742fe8-2f94-11e9-8d17-080027326ca6_76
+f4634d22f395        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 3 hours ago         Up 3 hours                                                                               k8s_POD_kube-addon-manager-minikube_kube-system_c4c3188325a93a2d7fb1714e1abf1259_77
+/home/docker>
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+/home/docker> docker container run nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+fc7181108d40: Pull complete
+c4277fc40ec2: Pull complete
+780053e98559: Pull complete
+Digest: sha256:bdbf36b7f1f77ffe7bd2a32e59235dff6ecf131e3b6b5b96061c652f30685f3a
+Status: Downloaded newer image for nginx:latest
+
+
+/home/docker>
+/home/docker>
+/home/docker> docker container ls| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+/home/docker> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                      PORTS                                                                NAMES
+9d4f3d17c227        nginx                                                            "nginx -g 'daemon ..."   6 minutes ago       Exited (0) 43 seconds ago                                                                        upbeat_jepsen
+378660816d37        ghost:1-alpine                                                   "docker-entrypoint..."   5 days ago          Exited (255) 5 days ago     0.0.0.0:8989->2368/tcp                                               blog-ghost
+7399a954fde4        mysql:5.7                                                        "docker-entrypoint..."   5 days ago          Exited (255) 5 days ago     3306/tcp, 33060/tcp                                                  blog-db
+/home/docker> docker container start 9d4f3d17c227
+9d4f3d17c227
+/home/docker> docker container ls| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+9d4f3d17c227        nginx                                                            "nginx -g 'daemon ..."   8 minutes ago       Up 11 seconds       80/tcp                                                               upbeat_jepsen
+/home/docker>
+/home/docker> history | tail -n 10
+    9  export PS1='$PWD> '
+   10  docker
+   11  docker container ls
+   12  docker container ls | grep -v k8s
+   13  docker container run nginx
+   14  docker container ls| grep -v k8s
+   15  docker container ls -a| grep -v k8s
+   16  docker container start 9d4f3d17c227
+   17  docker container ls| grep -v k8s
+   18  history | tail -n 10
+/home/docker> docker container run -d nginx
+e84b03b82ec4fbd1e7ade3fbbcdbfa287000605e65656667a24c60b52bd3d264
+/home/docker> docker container ls| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+e84b03b82ec4        nginx                                                            "nginx -g 'daemon ..."   11 seconds ago      Up 10 seconds       80/tcp                                                               gifted_goldberg
+9d4f3d17c227        nginx                                                            "nginx -g 'daemon ..."   12 minutes ago      Up 4 minutes        80/tcp                                                               upbeat_jepsen
+/home/docker> docker container inspect e84b03b82ec4
+[
+    {
+        "Id": "e84b03b82ec4fbd1e7ade3fbbcdbfa287000605e65656667a24c60b52bd3d264",
+        "Created": "2019-07-01T07:41:14.733954897Z",
+        "Path": "nginx",
+        "Args": [
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 7163,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2019-07-01T07:41:15.063193356Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:719cd2e3ed04781b11ed372ec8d712fac66d5b60a6fb6190bf76b7d18cb50105",
+        "ResolvConfPath": "/var/lib/docker/containers/e84b03b82ec4fbd1e7ade3fbbcdbfa287000605e65656667a24c60b52bd3d264/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/e84b03b82ec4fbd1e7ade3fbbcdbfa287000605e65656667a24c60b52bd3d264/hostname",
+        "HostsPath": "/var/lib/docker/containers/e84b03b82ec4fbd1e7ade3fbbcdbfa287000605e65656667a24c60b52bd3d264/hosts",
+        "LogPath": "/var/lib/docker/containers/e84b03b82ec4fbd1e7ade3fbbcdbfa287000605e65656667a24c60b52bd3d264/e84b03b82ec4fbd1e7ade3fbbcdbfa287000605e65656667a24c60b52bd3d264-json.log",
+        "Name": "/gifted_goldberg",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "shareable",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/0bf24495c915bedded007cc78e019877efda515bec1bbbe474eadaaf470d7dad-init/diff:/var/lib/docker/overlay2/04cc0fa8a77122e5c3423cb69ad9edde84095936f5e85cd276ba8a14243c9731/diff:/var/lib/docker/overlay2/5869ac331fd20cf39e49765d841e6a8e8aadc86295c2a94d98eac4f0cbaab045/diff:/var/lib/docker/overlay2/f6c43efe797389937388c706451360b9e00f292c0ceb6cb18b707cf70c6e2238/diff",
+                "MergedDir": "/var/lib/docker/overlay2/0bf24495c915bedded007cc78e019877efda515bec1bbbe474eadaaf470d7dad/merged",
+                "UpperDir": "/var/lib/docker/overlay2/0bf24495c915bedded007cc78e019877efda515bec1bbbe474eadaaf470d7dad/diff",
+                "WorkDir": "/var/lib/docker/overlay2/0bf24495c915bedded007cc78e019877efda515bec1bbbe474eadaaf470d7dad/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "e84b03b82ec4",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.17.0",
+                "NJS_VERSION=0.3.2",
+                "PKG_RELEASE=1~stretch"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "ArgsEscaped": true,
+            "Image": "nginx",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "f818c8034afe0bebc2479c0d64b67d3a61b7a9fb628e20aa65da4b3413907869",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/f818c8034afe",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "71f42bce5f59265f6715c01bd06823dde4aabf40601b3cefc9695d4ae0bdafdd",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.8",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:08",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "48798f5fe2580502c6a552d00abf423a86a8405de27cd78c62d9d7d69e5b7097",
+                    "EndpointID": "71f42bce5f59265f6715c01bd06823dde4aabf40601b3cefc9695d4ae0bdafdd",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.8",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:08",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+/home/docker> ifconfig
+br-c79b36e04052 Link encap:Ethernet  HWaddr 02:42:D9:88:87:67
+          inet addr:172.18.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+docker0   Link encap:Ethernet  HWaddr 02:42:AF:28:16:0C
+          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          inet6 addr: fe80::42:afff:fe28:160c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:179558 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:183326 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:24790706 (23.6 MiB)  TX bytes:431582763 (411.5 MiB)
+
+eth0      Link encap:Ethernet  HWaddr 08:00:27:32:6C:A6
+          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fe32:6ca6/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:246319 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:37993 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:346548222 (330.4 MiB)  TX bytes:2396532 (2.2 MiB)
+
+eth1      Link encap:Ethernet  HWaddr 08:00:27:6E:3F:40
+          inet addr:192.168.99.152  Bcast:192.168.99.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fe6e:3f40/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:3495 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:2170 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:296587 (289.6 KiB)  TX bytes:357551 (349.1 KiB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:840169 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:840169 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1
+          RX bytes:579826904 (552.9 MiB)  TX bytes:579826904 (552.9 MiB)
+
+veth3239a0c Link encap:Ethernet  HWaddr 1E:81:3A:2A:85:24
+          inet6 addr: fe80::1c81:3aff:fe2a:8524/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:15535 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:15763 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1884517 (1.7 MiB)  TX bytes:23482476 (22.3 MiB)
+
+veth6c0f49b Link encap:Ethernet  HWaddr 02:8F:47:85:9E:FD
+          inet6 addr: fe80::8f:47ff:fe85:9efd/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:17 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:1392 (1.3 KiB)
+
+veth821be5b Link encap:Ethernet  HWaddr EA:85:87:74:AA:E9
+          inet6 addr: fe80::e885:87ff:fe74:aae9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:18 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:1462 (1.4 KiB)
+
+veth9683fe1 Link encap:Ethernet  HWaddr 5E:C0:F5:2B:44:A6
+          inet6 addr: fe80::5cc0:f5ff:fe2b:44a6/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:8254 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:11549 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:603338 (589.1 KiB)  TX bytes:106688981 (101.7 MiB)
+
+veth9705876 Link encap:Ethernet  HWaddr 72:A1:45:EF:0F:36
+          inet6 addr: fe80::70a1:45ff:feef:f36/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:13644 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:13900 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:46384587 (44.2 MiB)  TX bytes:23200676 (22.1 MiB)
+
+veth97cd6d8 Link encap:Ethernet  HWaddr EE:97:BC:92:A7:B3
+          inet6 addr: fe80::ec97:bcff:fe92:a7b3/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:16480 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:16033 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:62115871 (59.2 MiB)  TX bytes:76750530 (73.1 MiB)
+
+veth9fb31b8 Link encap:Ethernet  HWaddr F6:7D:E0:29:AF:C9
+          inet6 addr: fe80::f47d:e0ff:fe29:afc9/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:10267 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:11215 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:894552 (873.5 KiB)  TX bytes:1011204 (987.5 KiB)
+
+vetha0184a8 Link encap:Ethernet  HWaddr 4A:BC:0E:52:5F:95
+          inet6 addr: fe80::48bc:eff:fe52:5f95/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1073 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1118 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:88777 (86.6 KiB)  TX bytes:300700 (293.6 KiB)
+
+vetha674969 Link encap:Ethernet  HWaddr C2:D7:06:32:34:78
+          inet6 addr: fe80::c0d7:6ff:fe32:3478/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:18 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:75 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1436 (1.4 KiB)  TX bytes:5244 (5.1 KiB)
+
+vethab438b7 Link encap:Ethernet  HWaddr 12:3C:30:84:AF:1F
+          inet6 addr: fe80::103c:30ff:fe84:af1f/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:64908 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:63072 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:9629198 (9.1 MiB)  TX bytes:291837002 (278.3 MiB)
+
+vethb32cc63 Link encap:Ethernet  HWaddr BA:D0:B6:09:E2:63
+          inet6 addr: fe80::b8d0:b6ff:fe09:e263/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5145 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5595 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:493427 (481.8 KiB)  TX bytes:501789 (490.0 KiB)
+
+vethdbea051 Link encap:Ethernet  HWaddr 46:9E:DD:A8:4F:55
+          inet6 addr: fe80::449e:ddff:fea8:4f55/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:28596 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:29679 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:7996478 (7.6 MiB)  TX bytes:4970193 (4.7 MiB)
+
+vethe4fef00 Link encap:Ethernet  HWaddr F6:9D:15:DC:A0:AD
+          inet6 addr: fe80::f49d:15ff:fedc:a0ad/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:29547 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:29731 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:3201362 (3.0 MiB)  TX bytes:9448014 (9.0 MiB)
+
+vethfaaf1cd Link encap:Ethernet  HWaddr DE:60:29:6F:4C:D8
+          inet6 addr: fe80::dc60:29ff:fe6f:4cd8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:6241 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6450 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1265134 (1.2 MiB)  TX bytes:679367 (663.4 KiB)
+
+/home/docker> docker container inspect e84b03b82ec4 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.8",
+                    "IPAddress": "172.17.0.8",
+/home/docker> curl 172.17.0.8:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+/home/docker> docker container stop e84b03b82ec4
+e84b03b82ec4
+/home/docker> curl 172.17.0.8:80
+^C
+/home/docker> docker container start e84b03b82ec4
+e84b03b82ec4
+/home/docker> curl 172.17.0.8:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+/home/docker>

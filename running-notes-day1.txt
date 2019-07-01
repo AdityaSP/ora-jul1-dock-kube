@@ -770,3 +770,212 @@ Commercial support is available at
 </body>
 </html>
 /home/docker>
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+/home/docker> docker container run -d -p 9090:80  nginx
+277591b8986627e9e472f3fb03acb77d72471cb9e79045da11e40a9ea287c91b
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                                     CREATED             STATUS              PORTS                                                NAMES
+277591b89866        nginx                                                       daemon ..."   9 seconds ago       Up 8 seconds        0.0.0.0:9090->80/tcp                                 lucid_poitras
+e84b03b82ec4        nginx                                                       daemon ..."   About an hour ago   Up About an hour    80/tcp                                               gifted_goldberg
+9d4f3d17c227        nginx                                                       daemon ..."   About an hour ago   Up About an hour    80/tcp                                               upbeat_jepsen
+/home/docker> docker container inspect 277591b89866| grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.16",
+                    "IPAddress": "172.17.0.16",
+/home/docker> curl 172.17.0.16:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+/home/docker>
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+277591b89866        nginx                                                            "nginx -g 'daemon ..."   4 minutes ago       Up 4 minutes        0.0.0.0:9090->80/tcp                                                 lucid_poitras
+e84b03b82ec4        nginx                                                            "nginx -g 'daemon ..."   About an hour ago   Up About an hour    80/tcp                                                               gifted_goldberg
+9d4f3d17c227        nginx                                                            "nginx -g 'daemon ..."   About an hour ago   Up About an hour    80/tcp                                                               upbeat_jepsen
+/home/docker> docker container rm e84b03b82ec4
+Error response from daemon: You cannot remove a running container e84b03b82ec4fbd1e7ade3fbbcdbfa287000605e65656667a24c60b52bd3d264. Stop the container before attempting removal or force remove
+/home/docker> docker container rm -f 9d4f3d17c227 e84b03b82ec4
+9d4f3d17c227
+e84b03b82ec4
+/home/docker>
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+277591b89866        nginx                                                            "nginx -g 'daemon ..."   15 minutes ago      Up 15 minutes       0.0.0.0:9090->80/tcp                                                 lucid_poitras
+/home/docker> docker container exec 277591b89866 ls
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+/home/docker> ls /
+bin  d     dev  home  lib    linuxrc  mnt  proc  run   srv  tmp  var
+c    data  etc  init  lib64  media    opt  root  sbin  sys  usr
+/home/docker>
+/home/docker> docker container exec 277591b89866 touch /tmp/f1.txt
+/home/docker> ls -ltra /tmp/f1.txt
+ls: cannot access '/tmp/f1.txt': No such file or directory
+/home/docker> docker container exec 277591b89866 ls -ltra /tmp/f1.txt
+-rw-r--r-- 1 root root 0 Jul  1 09:07 /tmp/f1.txt
+/home/docker> docker container exec 277591b89866 ls -ltra /usr/share/nginx/html
+total 16
+-rw-r--r-- 1 root root  612 May 21 14:23 index.html
+-rw-r--r-- 1 root root  494 May 21 14:23 50x.html
+drwxr-xr-x 3 root root 4096 Jun 11 00:03 ..
+drwxr-xr-x 2 root root 4096 Jun 11 00:03 .
+/home/docker> docker container exec -it 277591b89866 sh
+# ls
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+# ls -ltra /tmp/f1.txt
+-rw-r--r-- 1 root root 0 Jul  1 09:07 /tmp/f1.txt
+# hostname
+277591b89866
+# bash
+root@277591b89866:/# cd /usr/share/nginx/html/
+root@277591b89866:/usr/share/nginx/html# ls
+50x.html  index.html
+root@277591b89866:/usr/share/nginx/html# vi mypage.html
+bash: vi: command not found
+root@277591b89866:/usr/share/nginx/html# nano mypage.html
+bash: nano: command not found
+root@277591b89866:/usr/share/nginx/html# ps
+bash: ps: command not found
+root@277591b89866:/usr/share/nginx/html# ping
+bash: ping: command not found
+root@277591b89866:/usr/share/nginx/html# ifconfig
+bash: ifconfig: command not found
+root@277591b89866:/usr/share/nginx/html# cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
+NAME="Debian GNU/Linux"
+VERSION_ID="9"
+VERSION="9 (stretch)"
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+root@277591b89866:/usr/share/nginx/html# apt-get update
+Get:3 http://security-cdn.debian.org/debian-security stretch/updates InRelease [94.3 kB]
+Ign:1 http://cdn-fastly.deb.debian.org/debian stretch InRelease
+Get:2 http://cdn-fastly.deb.debian.org/debian stretch-updates InRelease [91.0 kB]
+Get:4 http://cdn-fastly.deb.debian.org/debian stretch Release [118 kB]
+Get:5 http://cdn-fastly.deb.debian.org/debian stretch Release.gpg [2434 B]
+Get:6 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 Packages [499 kB]
+Get:7 http://cdn-fastly.deb.debian.org/debian stretch-updates/main amd64 Packages [27.2 kB]
+Get:8 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 Packages [7082 kB]
+Fetched 7914 kB in 13s (587 kB/s)
+Reading package lists... Done
+root@277591b89866:/usr/share/nginx/html# apt-get install iputils-ping
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2 libcap2-bin libidn11 libnettle6 libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2 libcap2-bin libidn11 libnettle6 libpam-cap
+0 upgraded, 6 newly installed, 0 to remove and 1 not upgraded.
+Need to get 421 kB of archives.
+After this operation, 970 kB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libcap2 amd64 1:2.25-1 [16.8 kB]
+Get:2 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libidn11 amd64 1.33-1 [115 kB]
+Get:3 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libnettle6 amd64 3.3-1+b2 [192 kB]
+Get:4 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 iputils-ping amd64 3:20161105-1 [57.5 kB]
+Get:5 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libcap2-bin amd64 1:2.25-1 [26.5 kB]
+Get:6 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libpam-cap amd64 1:2.25-1 [13.5 kB]
+Fetched 421 kB in 2s (160 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2:amd64.
+(Reading database ... 7034 files and directories currently installed.)
+Preparing to unpack .../0-libcap2_1%3a2.25-1_amd64.deb ...
+Unpacking libcap2:amd64 (1:2.25-1) ...
+Selecting previously unselected package libidn11:amd64.
+Preparing to unpack .../1-libidn11_1.33-1_amd64.deb ...
+Unpacking libidn11:amd64 (1.33-1) ...
+Selecting previously unselected package libnettle6:amd64.
+Preparing to unpack .../2-libnettle6_3.3-1+b2_amd64.deb ...
+Unpacking libnettle6:amd64 (3.3-1+b2) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../3-iputils-ping_3%3a20161105-1_amd64.deb ...
+Unpacking iputils-ping (3:20161105-1) ...
+Selecting previously unselected package libcap2-bin.
+Preparing to unpack .../4-libcap2-bin_1%3a2.25-1_amd64.deb ...
+Unpacking libcap2-bin (1:2.25-1) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../5-libpam-cap_1%3a2.25-1_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.25-1) ...
+Setting up libnettle6:amd64 (3.3-1+b2) ...
+Setting up libcap2:amd64 (1:2.25-1) ...
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+Setting up libidn11:amd64 (1.33-1) ...
+Setting up iputils-ping (3:20161105-1) ...
+Setting up libpam-cap:amd64 (1:2.25-1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.24.1 /usr/local/share/perl/5.24.1 /usr/lib/x86_64-linux-gnu/perl5/5.24 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.24 /usr/share/perl/5.24 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base .) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up libcap2-bin (1:2.25-1) ...
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+root@277591b89866:/usr/share/nginx/html# ping google.com
+PING google.com (172.217.163.206) 56(84) bytes of data.
+64 bytes from maa05s06-in-f14.1e100.net (172.217.163.206): icmp_seq=1 ttl=52 time=52.5 ms
+64 bytes from maa05s06-in-f14.1e100.net (172.217.163.206): icmp_seq=2 ttl=52 time=36.1 ms
+64 bytes from maa05s06-in-f14.1e100.net (172.217.163.206): icmp_seq=3 ttl=52 time=36.3 ms
+^C
+--- google.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 36.135/41.673/52.522/7.673 ms
+root@277591b89866:/usr/share/nginx/html# cat > mypage.html
+<h1> My Code </h1>
+^C
+root@277591b89866:/usr/share/nginx/html# cat mypage.html
+<h1> My Code </h1>
+root@277591b89866:/usr/share/nginx/html# ls
+50x.html  index.html  mypage.html
+root@277591b89866:/usr/share/nginx/html# exit
+exit
+# exit
+/home/docker>

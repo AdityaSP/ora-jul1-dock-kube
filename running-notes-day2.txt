@@ -1,0 +1,788 @@
+login as: docker
+docker@192.168.99.153's password:
+Access denied
+docker@192.168.99.153's password:
+                         _             _
+            _         _ ( )           ( )
+  ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __
+/' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
+| ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
+(_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
+
+$ export PS1='$PWD> '
+/home/docker>
+/home/docker> ls
+/home/docker> cd /c/Users/Dell\ lap/docker-workshop/jul1/
+/c/Users/Dell lap/docker-workshop/jul1> ls
+ app   kube-installations.sh   rough-diag.pptx  '~$rough-diag.pptx'
+/c/Users/Dell lap/docker-workshop/jul1> cd app
+/c/Users/Dell lap/docker-workshop/jul1/app> ls
+Dockerfile  fail.tar  myimg.tar  output.txt
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> ls
+Dockerfile  fail.tar  myimg.tar  output.txt
+/c/Users/Dell lap/docker-workshop/jul1/app> rm -rf fail.tar myimg.tar output.txt                
+/c/Users/Dell lap/docker-workshop/jul1/app> ls
+Dockerfile
+/c/Users/Dell lap/docker-workshop/jul1/app> cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED                             SIZE
+app                 1                   bed177ed0c03        17 hours ago                        10.6MB
+app                 latest              bed177ed0c03        17 hours ago                        10.6MB
+/c/Users/Dell lap/docker-workshop/jul1/app> #docker image build -t app -t app:1 .               /c/Users/Dell lap/docker-workshop/jul1/app> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                       PORTS                                                                NAMES
+5717aaaca089        f9242c22ffb1                                                     "/bin/sh -c 'caer ..."   17 hours ago        Exited (127) 17 hours ago                                                                         keen_yalow
+0f9a08b83388        f9242c22ffb1                                                     "/bin/sh -c 'caer ..."   17 hours ago        Exited (127) 17 hours ago                                                                         vibrant_shaw
+0ab93ba85219        f9242c22ffb1                                                     "sh"                     17 hours ago        Exited (2) 17 hours ago                                                                           heuristic_perlman
+af6b403575cc        f9242c22ffb1                                                     "/bin/sh -c 'caer ..."   17 hours ago        Exited (127) 17 hours ago                                                                         flamboyant_mcnulty
+56ffa70496b5        nginx-app                                                        "nginx -g 'daemon ..."   19 hours ago        Exited (255) 8 minutes ago   0.0.0.0:9090->80/tcp                                                 sharp_babbage
+378660816d37        ghost:1-alpine                                                   "docker-entrypoint..."   6 days ago          Exited (255) 6 days ago      0.0.0.0:8989->2368/tcp                                               blog-ghost
+7399a954fde4        mysql:5.7                                                        "docker-entrypoint..."   6 days ago          Exited (255) 6 days ago      3306/tcp, 33060/tcp                                                  blog-db
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+514e3e334f4ff1fdf4248372da66da553c74b2e0f43e8c1f89a270a966490cee
+5717aaaca089c95b55019b2596ef271424ff132f391a145ff46ead6ba185a053
+0f9a08b833887f57f3f10f6226c7596153b5eeea2e689e59a91ab7d67542c0b5
+0ab93ba8521962fc09024c11bf302d09147137b3277eed9b4a692ff26ae5f413
+af6b403575cce84d3abceb0c047257a76ac373e8b967f739d4c60476519998fc
+56ffa70496b5ad4d7a74300703c651d82745144c79c7cc85bd01d59b18464584
+d9089b8d199a0361ef0b98cd7dc82362ab9d0437b4aad0975ddf0174ba40c944
+74a041930f323b20eaf35e1b4edc182da683e2932c97be0930b63e40b8de1629
+4e492565b7146869f1a3314b635cc9c3e66326dfa46dc88c75ddf78445cea40c
+151aa3e5450523ce874edfda423e2d188f2814f8443cf8f1e46559a7c1b35d27
+b0b91f0feff0f2b279c356bd6384044280a43307ea5b03709d778899b5a1bcd8
+2d7ba7d9a69456457b3e1b05c7fad4d73a03e5fbc6dbd0cd9c65528f2e5b703e
+9c0da543fdf1146b42114bfd09eaa751ef2efb562a81c3e2d489e7c7a6852339
+bffdceac96683c7f663f4b0dcc97293560e2e2a1d033598ce4ee836fbc0d2790
+2ed0d8213669f1a45880bd84bee175b2b318c7fb3e4ed5db8e6b8e4cac588b9f
+1220fa093126cae3f0859ae201bfbdca605061c545ad0bbdc959254c379172f5
+93468607cb12caf9933607a8d64587ef1cc8d2bf449f710ddbff2e74caa4d583
+24061a6b705a7bdfc989174db7b5d84485f40a86d2769b1fc6f8d2c44969e197
+ab4ef1d8976efc0b3b9175c501ba21e2bf290f1515fe4d9935ea7d898aca9cf5
+d16799103236aad5c6d58c7988967ec31c1b4b7ba17e302f4cb9d577020c3ece
+d392d9950044bafaef1c518dae91b5047d8b10fa46acb0a24b4812fbe0ccda9c
+19d126c6f637b4496bb1df7998f9ef3e9eba1bef3a086fb7985b9d220aeeb519
+f7cedf554dbd51299b5af2ad7a9df76dd97b95d01a8063c09507cfba5ee0c644
+1a230cdd71fb50aa846578bcb16d7089f9361561466f813d7e8a93f64d7f51ce
+e376b29fc8de2c82388d7857c6ae2af61dba82753f64113ff4188b51efdbd6e0
+45bd8bdb1eb18f40fab890acd5bddfaa1b5659a86474159bca7463c918b7b41e
+aabde088d88eae037782e17d4ee64105ef1efc37cc0dcc1846158425f083ec6c
+62773cfed88177fb575f461f8b2a31ffe3546ef5f898b8760faef78bad8f8341
+56f9a932116887c9b10ecce756bd1da7fae6007eaee053398ad91def74e08e90
+9f9c6341f5552453a8d3288faffa47a5b7c329733caf7794c2b33946188155d0
+ec1704eedcdef9531c15e0399ae6d706be2c937ff2f51b68126e22a222cee8d4
+475b817e4c4815a9225a241fd9090034b9e4ff2fa06b63ee23c89714bbf1d513
+f4634d22f3951f44c6ab4dcd440a6fcb941ebaa8480f17902b25f549d04af3f7
+378660816d37cba3a6d570566fa5f2586fe6d8888111220b640bb07577f593a0
+7399a954fde45ddd7c5290c3afe70cb073668f8a3c298cfe9551db486d165ca8
+
+Total reclaimed space: 1.554MB
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run -d app
+9022db86825a0cb508b788e3584bcf86f879bff74ed99050732d6a9cf93fbe97
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                      PORTS                                                                NAMES
+9022db86825a        app                                                              "/bin/sh"                19 seconds ago      Exited (0) 16 seconds ago                                                                        goofy_tesla
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run -d nginx
+a4afbe01cb8641a0ee6a0d9ba9fa3bc2c2c5ad3d0ecfb37981fcda080ec4c663
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED              STATUS                          PORTS                                                                NAMES
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   5 seconds ago        Up 4 seconds                    80/tcp                                                               confident_albattani
+9022db86825a        app                                                              "/bin/sh"                About a minute ago   Exited (0) About a minute ago                                                                        goofy_tesla
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image history nginx
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+719cd2e3ed04        3 weeks ago         /bin/sh -c #(nop)  CMD ["nginx" "-g" "daem...   0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  EXPOSE 80                    0B      
+<missing>           3 weeks ago         /bin/sh -c ln -sf /dev/stdout /var/log/ngi...   22B     
+<missing>           3 weeks ago         /bin/sh -c set -x     && addgroup --system...   54MB    
+<missing>           3 weeks ago         /bin/sh -c #(nop)  ENV PKG_RELEASE=1~stretch    0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.2        0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.0     0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  LABEL maintainer=NGINX ...   0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  CMD ["bash"]                 0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop) ADD file:5ffb798d6408941...   55.3MB  
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image history app
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+bed177ed0c03        17 hours ago        /bin/sh -c apk add apache2                      3.6MB   
+f9242c22ffb1        17 hours ago        /bin/sh -c apk update                           1.42MB  
+4d90542f0623        12 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B      
+<missing>           12 days ago         /bin/sh -c #(nop) ADD file:fef3b00b3ae6396...   5.58MB  
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run -d app ping google.com
+f6ec43f40c91d4913bb2a7f26dcfeea67a9e07ad615eaf8bc685f84531f41586
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+f6ec43f40c91        app                                                              "ping google.com"        8 seconds ago       Up 7 seconds                                                                             awesome_euclid
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   4 minutes ago       Up 4 minutes        80/tcp                                                               confident_albattani
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container exec -it f6ec43f40c91 sh
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container exec -it f6ec43f40c91 sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+    6 root      0:00 sh
+   11 root      0:00 ps
+/ # exit
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container exec -it f6ec43f40c91 sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+   12 root      0:00 sh
+   16 root      0:00 ps
+/ # kill -9 1
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+   12 root      0:00 sh
+   17 root      0:00 ps
+/ # kill -9 12
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run -d app ping -c20 google.com
+b18f228133106e4df61d286116c4e7904e216bc58c57e5064bf648372a469634
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+b18f22813310        app                                                              "ping -c20 google.com"   8 seconds ago       Up 7 seconds                                                                             objective_hermann
+f6ec43f40c91        app                                                              "ping google.com"        8 minutes ago       Up 8 minutes                                                                             awesome_euclid
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   12 minutes ago      Up 12 minutes       80/tcp                                                               confident_albattani
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+f6ec43f40c91        app                                                              "ping google.com"        8 minutes ago       Up 8 minutes                                                                             awesome_euclid
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   12 minutes ago      Up 12 minutes       80/tcp                                                               confident_albattani
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                      PORTS                                                                NAMES
+b18f22813310        app                                                              "ping -c20 google.com"   48 seconds ago      Exited (0) 28 seconds ago                                                                        objective_hermann
+f6ec43f40c91        app                                                              "ping google.com"        8 minutes ago       Up 8 minutes                                                                                     awesome_euclid
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   13 minutes ago      Up 13 minutes               80/tcp                                                               confident_albattani
+9022db86825a        app                                                              "/bin/sh"                14 minutes ago      Exited (0) 14 minutes ago                                                                        goofy_tesla
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container kill a4afbe01cb86
+a4afbe01cb86
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED              STATUS                          PORTS                                                                NAMES
+b18f22813310        app                                                              "ping -c20 google.com"   About a minute ago   Exited (0) About a minute ago                                                                        objective_hermann
+f6ec43f40c91        app                                                              "ping google.com"        9 minutes ago        Up 9 minutes                                                                                         awesome_euclid
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   14 minutes ago       Exited (137) 3 seconds ago                                                                           confident_albattani
+9022db86825a        app                                                              "/bin/sh"                15 minutes ago       Exited (0) 15 minutes ago                                                                            goofy_tesla
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run  app ping -c2 google.com
+PING google.com (172.217.163.110): 56 data bytes
+64 bytes from 172.217.163.110: seq=0 ttl=52 time=42.081 ms
+64 bytes from 172.217.163.110: seq=1 ttl=52 time=37.293 ms
+
+--- google.com ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 37.293/39.687/42.081 ms
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                            PORTS                                                                NAMES
+57f001af57af        app                                                              "ping -c2 google.com"    35 seconds ago      Exited (0) 33 seconds ago                                                                              elastic_mcclintock
+b18f22813310        app                                                              "ping -c20 google.com"   3 minutes ago       Exited (0) 3 minutes ago                                                                               objective_hermann
+f6ec43f40c91        app                                                              "ping google.com"        11 minutes ago      Up 11 minutes                                                                                          awesome_euclid
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   15 minutes ago      Exited (137) About a minute ago                                                                        confident_albattani
+9022db86825a        app                                                              "/bin/sh"                17 minutes ago      Exited (0) 17 minutes ago                                                                              goofy_tesla
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container logs b18f22813310
+PING google.com (172.217.163.110): 56 data bytes
+64 bytes from 172.217.163.110: seq=0 ttl=52 time=63.553 ms
+64 bytes from 172.217.163.110: seq=1 ttl=52 time=40.752 ms
+64 bytes from 172.217.163.110: seq=2 ttl=52 time=70.401 ms
+64 bytes from 172.217.163.110: seq=3 ttl=52 time=43.658 ms
+64 bytes from 172.217.163.110: seq=4 ttl=52 time=36.638 ms
+64 bytes from 172.217.163.110: seq=5 ttl=52 time=51.461 ms
+64 bytes from 172.217.163.110: seq=6 ttl=52 time=35.317 ms
+64 bytes from 172.217.163.110: seq=7 ttl=52 time=67.570 ms
+64 bytes from 172.217.163.110: seq=8 ttl=52 time=37.653 ms
+64 bytes from 172.217.163.110: seq=9 ttl=52 time=57.921 ms
+64 bytes from 172.217.163.110: seq=10 ttl=52 time=35.039 ms
+64 bytes from 172.217.163.110: seq=11 ttl=52 time=61.094 ms
+64 bytes from 172.217.163.110: seq=12 ttl=52 time=39.795 ms
+64 bytes from 172.217.163.110: seq=13 ttl=52 time=51.296 ms
+64 bytes from 172.217.163.110: seq=14 ttl=52 time=42.591 ms
+64 bytes from 172.217.163.110: seq=15 ttl=52 time=48.137 ms
+64 bytes from 172.217.163.110: seq=16 ttl=52 time=43.913 ms
+64 bytes from 172.217.163.110: seq=17 ttl=52 time=56.324 ms
+64 bytes from 172.217.163.110: seq=18 ttl=52 time=74.165 ms
+64 bytes from 172.217.163.110: seq=19 ttl=52 time=54.052 ms
+
+--- google.com ping statistics ---
+20 packets transmitted, 20 packets received, 0% packet loss
+round-trip min/avg/max = 35.039/50.566/74.165 ms
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a| grep -v k8s
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                       PORTS                                                                NAMES
+57f001af57af        app                                                              "ping -c2 google.com"    8 minutes ago       Exited (0) 8 minutes ago                                                                          elastic_mcclintock
+b18f22813310        app                                                              "ping -c20 google.com"   10 minutes ago      Exited (0) 10 minutes ago                                                                         objective_hermann
+f6ec43f40c91        app                                                              "ping google.com"        18 minutes ago      Up 18 minutes                                                                                     awesome_euclid
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   23 minutes ago      Exited (137) 9 minutes ago                                                                        confident_albattani
+9022db86825a        app                                                              "/bin/sh"                24 minutes ago      Exited (0) 24 minutes ago                                                                         goofy_tesla
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image history nginx
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+719cd2e3ed04        3 weeks ago         /bin/sh -c #(nop)  CMD ["nginx" "-g" "daem...   0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  EXPOSE 80                    0B      
+<missing>           3 weeks ago         /bin/sh -c ln -sf /dev/stdout /var/log/ngi...   22B     
+<missing>           3 weeks ago         /bin/sh -c set -x     && addgroup --system...   54MB    
+<missing>           3 weeks ago         /bin/sh -c #(nop)  ENV PKG_RELEASE=1~stretch    0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.2        0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.0     0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  LABEL maintainer=NGINX ...   0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop)  CMD ["bash"]                 0B      
+<missing>           3 weeks ago         /bin/sh -c #(nop) ADD file:5ffb798d6408941...   55.3MB  
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx env
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=96333503677a
+NGINX_VERSION=1.17.0
+NJS_VERSION=0.3.2
+PKG_RELEASE=1~stretch
+HOME=/root
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx env && nginx -g "daemon off"
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=e47a5f6c3594
+NGINX_VERSION=1.17.0
+NJS_VERSION=0.3.2
+PKG_RELEASE=1~stretch
+HOME=/root
+-bash: nginx: command not found
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx which nginx
+/usr/sbin/nginx
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx "env && nginx -g 'daemon off'"
+container_linux.go:265: starting container process caused "exec: \"env && nginx -g 'daemon off'\": executable file not found in $PATH"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"env && nginx -g 'daemon off'\": executable file not found in $PATH".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx env && nginx -g 'daemon off'
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=34fbbc340ffb
+NGINX_VERSION=1.17.0
+NJS_VERSION=0.3.2
+PKG_RELEASE=1~stretch
+HOME=/root
+-bash: nginx: command not found
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx env && /usr/sbin/nginx -g 'daemon off'
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=8ae416e5447a
+NGINX_VERSION=1.17.0
+NJS_VERSION=0.3.2
+PKG_RELEASE=1~stretch
+HOME=/root
+-bash: /usr/sbin/nginx: No such file or directory
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx env && env
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=622a402fe22d
+NGINX_VERSION=1.17.0
+NJS_VERSION=0.3.2
+PKG_RELEASE=1~stretch
+HOME=/root
+SSH_CONNECTION=192.168.99.1 58159 192.168.99.153 22
+EDITOR=/bin/vi
+USER=docker
+PAGER=/bin/more
+PWD=/c/Users/Dell lap/docker-workshop/jul1/app
+HOME=/home/docker
+SSH_CLIENT=192.168.99.1 58159 22
+SSH_TTY=/dev/pts/0
+MAIL=/var/mail/docker
+TERM=xterm
+SHELL=/bin/bash
+SHLVL=1
+LOGNAME=docker
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+PS1=$PWD>
+_=/bin/env
+OLDPWD=/c/Users/Dell lap/docker-workshop/jul1
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx 'env && env'
+container_linux.go:265: starting container process caused "exec: \"env && env\": executable file not found in $PATH"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"env && env\": executable file not found in $PATH".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run nginx "env && env"
+container_linux.go:265: starting container process caused "exec: \"env && env\": executable file not found in $PATH"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"env && env\": executable file not found in $PATH".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run --entrypoint "" nginx "env && env"
+container_linux.go:265: starting container process caused "exec: \"env && env\": executable file not found in $PATH"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"env && env\": executable file not found in $PATH".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run  nginx env && /bin/sh -c env   PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=389ad8e5d7bd
+NGINX_VERSION=1.17.0
+NJS_VERSION=0.3.2
+PKG_RELEASE=1~stretch
+HOME=/root
+SSH_CONNECTION=192.168.99.1 58159 192.168.99.153 22
+_=/bin/env
+OLDPWD=/c/Users/Dell lap/docker-workshop/jul1
+EDITOR=/bin/vi
+USER=docker
+PAGER=/bin/more
+PWD=/c/Users/Dell lap/docker-workshop/jul1/app
+HOME=/home/docker
+SSH_CLIENT=192.168.99.1 58159 22
+SSH_TTY=/dev/pts/0
+MAIL=/var/mail/docker
+SHELL=/bin/bash
+TERM=xterm
+SHLVL=2
+LOGNAME=docker
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run  nginx "env && /bin/sh -c env"
+container_linux.go:265: starting container process caused "exec: \"env && /bin/sh -c env\": stat env && /bin/sh -c env: no such file or directory"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"env && /bin/sh -c env\": stat env && /bin/sh -c env: no such file or directory".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run --entrypoint ""  nginx "env && /bin/sh -c env"
+container_linux.go:265: starting container process caused "exec: \"env && /bin/sh -c env\": stat env && /bin/sh -c env: no such file or directory"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"env && /bin/sh -c env\": stat env && /bin/sh -c env: no such file or directory".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run  alpine  "env && env"
+container_linux.go:265: starting container process caused "exec: \"env && env\": executable file not found in $PATH"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"env && env\": executable file not found in $PATH".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run  alpine  "env ; env"
+container_linux.go:265: starting container process caused "exec: \"env ; env\": executable file not found in $PATH"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"env ; env\": executable file not found in $PATH".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run  alpine  ["env && env"]
+container_linux.go:265: starting container process caused "exec: \"[env && env]\": executable file not found in $PATH"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"[env && env]\": executable file not found in $PATH".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run  alpine  ["env && env"]
+container_linux.go:265: starting container process caused "exec: \"[env && env]\": executable file not found in $PATH"
+docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"[env && env]\": executable file not found in $PATH".
+ERRO[0000] error waiting for container: context canceled
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls -a | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED              STATUS                        PORTS                                                                NAMES
+bff13bcc74e5        alpine                                                           "[env && env]"           24 seconds ago       Created                                                                                            elegant_booth
+70f1c0e073d2        alpine                                                           "[env && env]"           35 seconds ago       Created                                                                                            loving_fermi
+0ab9512606f1        alpine                                                           "env ; env"              51 seconds ago       Created                                                                                            peaceful_mayer
+439e10d3d355        alpine                                                           "env && env"             About a minute ago   Created                                                                                            nifty_swartz
+0c8b44bb83c3        nginx                                                            "env && /bin/sh -c..."   About a minute ago   Created                       80/tcp                                                               ecstatic_mcnulty
+62a678037b30        nginx                                                            "env && /bin/sh -c..."   About a minute ago   Created                       80/tcp                                                               sharp_sinoussi
+389ad8e5d7bd        nginx                                                            "env"                    2 minutes ago        Exited (0) 2 minutes ago                                                                           priceless_swanson
+5206845dc38e        nginx                                                            "env && env"             2 minutes ago        Created                       80/tcp                                                               elegant_roentgen
+d64ec6e34c6d        nginx                                                            "env && env"             2 minutes ago        Created                       80/tcp                                                               boring_curie
+1b3cb3cdf345        nginx                                                            "env && env"             3 minutes ago        Created                       80/tcp                                                               nostalgic_booth
+622a402fe22d        nginx                                                            "env"                    3 minutes ago        Exited (0) 3 minutes ago                                                                           peaceful_einstein
+8ae416e5447a        nginx                                                            "env"                    4 minutes ago        Exited (0) 4 minutes ago                                                                           awesome_lalande
+34fbbc340ffb        nginx                                                            "env"                    4 minutes ago        Exited (0) 4 minutes ago                                                                           hardcore_bardeen
+8d34f88625eb        nginx                                                            "env && nginx -g '..."   4 minutes ago        Created                       80/tcp                                                               epic_bohr
+1972f74e5897        nginx                                                            "which nginx"            5 minutes ago        Exited (0) 5 minutes ago                                                                           eager_johnson
+e47a5f6c3594        nginx                                                            "env"                    5 minutes ago        Exited (0) 5 minutes ago                                                                           happy_yalow
+96333503677a        nginx                                                            "env"                    6 minutes ago        Exited (0) 6 minutes ago                                                                           lucid_goldstine
+57f001af57af        app                                                              "ping -c2 google.com"    16 minutes ago       Exited (0) 16 minutes ago                                                                          elastic_mcclintock
+b18f22813310        app                                                              "ping -c20 google.com"   19 minutes ago       Exited (0) 18 minutes ago                                                                          objective_hermann
+f6ec43f40c91        app                                                              "ping google.com"        27 minutes ago       Up 27 minutes                                                                                      awesome_euclid
+a4afbe01cb86        nginx                                                            "nginx -g 'daemon ..."   31 minutes ago       Exited (137) 17 minutes ago                                                                        confident_albattani
+9022db86825a        app                                                              "/bin/sh"                32 minutes ago       Exited (0) 32 minutes ago                                                                          goofy_tesla
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run --rm nginx which nginx         /usr/sbin/nginx
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+bff13bcc74e59bf72d120407c9b23c44ef2050f45b4a455b8a1ee88017ae9c6a
+70f1c0e073d2dc05ade2bc854ada3a3664a4d8d24222f32560951f12122526ad
+0ab9512606f1f01ae732f1e8dac7a33977a304f3eb865e3d10e7024d82a8cbeb
+439e10d3d355cbf5d4ca12bb61152635d406cddea521ea75703cf64b3889ca07
+0c8b44bb83c3fec0c80c7deececb85a4899708ed6b508d8a14dc9673b2290d29
+62a678037b300eee345694856786cb3925847733c2d95b87dcdf1d06d3728dbc
+389ad8e5d7bd1a14597e0e74cae10a3526a23f93294309dae7b8984b1072fd0f
+5206845dc38e3adc3f8f1fbd5dab6003409bf27527142957e7d51950c7c04174
+d64ec6e34c6d48ecc1094b3ab3da1969f91164e47a2c005ebbb0f44db30e7942
+1b3cb3cdf345c92ec30faf99ac38f2cef6ae8068c4a264534a3bf1afcb232f36
+622a402fe22de93f76e6f3921149e71a5059a78ed78a3f527a0f269558e5f81a
+8ae416e5447a10cf0eed07768fb112e498d5984e00f70145f3895d52b8bfcb9a
+34fbbc340ffbb172fb4bd1a8e398e14d2b1eff29c2ebe511ee4fd3317f78652a
+8d34f88625eb83509d50932cbc665a3504b29c2dbae2ad2f4aab35aa0403110e
+1972f74e5897366ca8a3420edfe0de84259329ee59513be16ff1726fa449bda8
+e47a5f6c35949d21c3d885189bfad883be9a43021dd3a96b191ed19fc52d15b2
+96333503677ac82d667a59e6483597bbb0a103a20464ac0ca9bbbbbcf3eb5702
+57f001af57af642ca1d1db9ab4f1655c987da0c7eb47e3f9fa6f29b13d92cc8f
+b18f228133106e4df61d286116c4e7904e216bc58c57e5064bf648372a469634
+a4afbe01cb8641a0ee6a0d9ba9fa3bc2c2c5ad3d0ecfb37981fcda080ec4c663
+9022db86825a0cb508b788e3584bcf86f879bff74ed99050732d6a9cf93fbe97
+
+Total reclaimed space: 2B
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls  | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+f6ec43f40c91        app                                                              "ping google.com"        28 minutes ago      Up 28 minutes                                                                            awesome_euclid
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container exec -it f6ec43f40c91 sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+   18 root      0:00 sh
+   23 root      0:00 ps
+/ # httpd
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.15. Set the 'ServerName' directive globally to suppress this message
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+   18 root      0:00 sh
+   25 root      0:00 httpd
+   26 apache    0:00 httpd
+   27 apache    0:00 httpd
+   28 apache    0:00 httpd
+   29 apache    0:00 httpd
+   30 apache    0:00 httpd
+   31 root      0:00 ps
+/ # kill -9 26 27 28 29 30
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+   18 root      0:00 sh
+   25 root      0:00 httpd
+   32 root      0:00 ps
+/ # kill -9 25
+/ # httpd
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.15. Set the 'ServerName' directive globally to suppress this message
+(98)Address in use: AH00072: make_sock: could not bind to address 0.0.0.0:80
+no listening sockets available, shutting down
+AH00015: Unable to open logs
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+   18 root      0:00 sh
+   33 apache    0:00 httpd
+   34 apache    0:00 httpd
+   35 apache    0:00 httpd
+   36 apache    0:00 httpd
+   37 apache    0:00 httpd
+   38 apache    0:00 httpd
+   39 apache    0:00 httpd
+   41 root      0:00 ps
+/ # kill -9 33 34 35 36 37 38 39
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+   18 root      0:00 sh
+   42 root      0:00 ps
+/ # httpd -D FOREGROUND
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.15. Set the 'ServerName' directive globally to suppress this message
+
+^C/ # exit
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run -p9090:80 -d app httpd -D FOREGROUND
+2908e79c1fd104237285f3bb63ac4a23806c6fdbef4556c6a4e31458d3497a13
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+2908e79c1fd1        app                                                              "httpd -D FOREGROUND"    6 seconds ago       Up 6 seconds        0.0.0.0:9090->80/tcp                                                 wizardly_mirzakhani
+f6ec43f40c91        app                                                              "ping google.com"        37 minutes ago      Up 37 minutes                                                                            awesome_euclid
+/c/Users/Dell lap/docker-workshop/jul1/app> curl localhost:9090
+<html><body><h1>It works!</h1></body></html>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run  nginx /bin/sh                 -c "env &&  env"
+HOSTNAME=bfa357043b19
+HOME=/root
+PKG_RELEASE=1~stretch
+NGINX_VERSION=1.17.0
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+NJS_VERSION=0.3.2
+PWD=/
+HOSTNAME=bfa357043b19
+HOME=/root
+PKG_RELEASE=1~stretch
+NGINX_VERSION=1.17.0
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+NJS_VERSION=0.3.2
+PWD=/
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> vi Dockerfile
+/c/Users/Dell lap/docker-workshop/jul1/app> cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+CMD ["httpd", "-D", "FOREGROUND"]
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED                             SIZE
+app                 1                   bed177ed0c03        18 hours ago                        10.6MB
+app                 latest              bed177ed0c03        18 hours ago                        10.6MB
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 1                   bed177ed0c03        18 hours ago        10.6MB
+app                 latest              bed177ed0c03        18 hours ago        10.6MB
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image build -t app:2 -t app:latest .
+Sending build context to Docker daemon  2.048kB
+Step 1/4 : FROM alpine
+ ---> 4d90542f0623
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> f9242c22ffb1
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> bed177ed0c03
+Step 4/4 : CMD httpd -D FOREGROUND
+ ---> Running in 3ab1f2bd3713
+ ---> 12f5bf2c5d53
+Removing intermediate container 3ab1f2bd3713
+Successfully built 12f5bf2c5d53
+Successfully tagged app:2
+Successfully tagged app:latest
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image history app
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+12f5bf2c5d53        43 seconds ago      /bin/sh -c #(nop)  CMD ["httpd" "-D" "FORE...   0B      
+bed177ed0c03        18 hours ago        /bin/sh -c apk add apache2                      3.6MB   
+f9242c22ffb1        18 hours ago        /bin/sh -c apk update                           1.42MB  
+4d90542f0623        12 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B      
+<missing>           12 days ago         /bin/sh -c #(nop) ADD file:fef3b00b3ae6396...   5.58MB  
+/c/Users/Dell lap/docker-workshop/jul1/app> vi Dockerfile
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> cat Dockerfile
+FROM alpine:3.10
+RUN apk update
+RUN apk add apache2
+CMD ["httpd", "-D", "FOREGROUND"]
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image history app
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+12f5bf2c5d53        4 minutes ago       /bin/sh -c #(nop)  CMD ["httpd" "-D" "FORE...   0B      
+bed177ed0c03        18 hours ago        /bin/sh -c apk add apache2                      3.6MB   
+f9242c22ffb1        18 hours ago        /bin/sh -c apk update                           1.42MB  
+4d90542f0623        12 days ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B      
+<missing>           12 days ago         /bin/sh -c #(nop) ADD file:fef3b00b3ae6396...   5.58MB  
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container run -p9091:80 -d app
+d57d081b5fdfb6a2d52d0c1a1c9f188fa02c8b5313caae7f02dfbff37f7d9775
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image build -t app:2 -t app:latest --no-cache .
+Sending build context to Docker daemon  2.048kB
+Step 1/4 : FROM alpine:3.10
+3.10: Pulling from library/alpine
+Digest: sha256:ca1c944a4f8486a153024d9965aafbe24f5723c1d5c02f4964c045a16d19dc54
+Status: Downloaded newer image for alpine:3.10
+ ---> 4d90542f0623
+Step 2/4 : RUN apk update
+ ---> Running in 2be33637ad34
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/community/x86_64/APKINDEX.tar.gz
+v3.10.0-10-g8ac1f86999 [http://dl-cdn.alpinelinux.org/alpine/v3.10/main]
+v3.10.0-8-gf1f49be1c7 [http://dl-cdn.alpinelinux.org/alpine/v3.10/community]
+OK: 10327 distinct packages available
+ ---> 70ef00892a1b
+Removing intermediate container 2be33637ad34
+Step 3/4 : RUN apk add apache2
+ ---> Running in 8038a58c2ad2
+(1/6) Installing libuuid (2.33.2-r0)
+(2/6) Installing apr (1.6.5-r0)
+(3/6) Installing expat (2.2.7-r0)
+(4/6) Installing apr-util (1.6.1-r6)
+(5/6) Installing pcre (8.43-r0)
+(6/6) Installing apache2 (2.4.39-r0)
+Executing apache2-2.4.39-r0.pre-install
+Executing busybox-1.30.1-r2.trigger
+OK: 9 MiB in 20 packages
+ ---> d8a6e8619b29
+Removing intermediate container 8038a58c2ad2
+Step 4/4 : CMD httpd -D FOREGROUND
+ ---> Running in c8798222a70c
+ ---> 3f12f36e62cc
+Removing intermediate container c8798222a70c
+Successfully built 3f12f36e62cc
+Successfully tagged app:2
+Successfully tagged app:latest
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image rm 12f5bf2c5d53
+Error response from daemon: conflict: unable to delete 12f5bf2c5d53 (cannot be forced) - image is being used by running container d57d081b5fdf
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container rm -f d57d081b5fdf
+d57d081b5fdf
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image rm 12f5bf2c5d53
+Deleted: sha256:12f5bf2c5d53c63db8ffa687225b1d30850279e0e6076c05a1e95aee6564c08d
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image prune
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image rm bed177ed0c03
+Error response from daemon: conflict: unable to delete bed177ed0c03 (cannot be forced) - image is being used by running container 2908e79c1fd1
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container rm -f 2908e79c1fd1
+2908e79c1fd1
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+bfa357043b190c716fdf62804fdfb30dc26dfdd338279688eeec9603e1ef553e
+
+Total reclaimed space: 0B
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image prune
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container rm -f bed177ed0c03
+Error response from daemon: No such container: bed177ed0c03
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image rm bed177ed0c03
+Error response from daemon: conflict: unable to delete bed177ed0c03 (cannot be forced) - image is being used by running container f6ec43f40c91
+/c/Users/Dell lap/docker-workshop/jul1/app> docker container rm -f f6ec43f40c91
+f6ec43f40c91
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image prune
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image rm bed177ed0c03
+Untagged: app:1
+Deleted: sha256:bed177ed0c03a235a8c76527446bef35283fd57ab6555de90e3fa0ca8af526d5
+Deleted: sha256:8cd118c3d9ff29e241b2f68990cfa88f667697a4f907ff5450cd58c6ca39d7c0
+Deleted: sha256:f9242c22ffb1332385f42e317b064ea3bf7c70ec4e82ada0258ba1ea9a448c8a
+Deleted: sha256:9cab6920362759babc4db0c7e420a6c42e9f4408c6e2f09bd4ff3f478de4ffa1
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image prune
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image ls -a | grep f9242c22ffb1
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> cat Dockerfile
+FROM alpine:3.10
+RUN apk update
+RUN apk add apache2
+CMD ["httpd", "-D", "FOREGROUND"]
+/c/Users/Dell lap/docker-workshop/jul1/app> cat > mypage.html
+<h1> My Code </h1>
+^C
+/c/Users/Dell lap/docker-workshop/jul1/app> cat mypage.html
+<h1> My Code </h1>
+/c/Users/Dell lap/docker-workshop/jul1/app> vi Dockerfile
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image build -t app:3 -t app:latest  .        Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM alpine:3.10
+ ---> 4d90542f0623
+Step 2/5 : RUN apk update
+ ---> Using cache
+ ---> 70ef00892a1b
+Step 3/5 : RUN apk add apache2
+ ---> Using cache
+ ---> d8a6e8619b29
+Step 4/5 : CMD httpd -D FOREGROUND
+ ---> Using cache
+ ---> 3f12f36e62cc
+Step 5/5 : COPY mypage.html /var/www/localhost/htdocs
+ ---> 22af0e37d83e
+Successfully built 22af0e37d83e
+Successfully tagged app:3
+Successfully tagged app:latest
+/c/Users/Dell lap/docker-workshop/jul1/app> cd ../..
+/c/Users/Dell lap/docker-workshop> ls
+'New folder'                                ghost.tar       mar4
+ al-ap                                      index.html      may13
+ apr1                                       jan21           may20
+ apr22                                      jan28           may9
+ apr8                                       jan7            mysql.tar
+ bash-alpine                                jenkins         nginx-alpine.tar
+ code                                       jenkins_home    nginx.conf
+ command-dec24-2.txt                        jenkins_home2   pinger
+ command-withoutput-dec26-dec27-p6908.log   jenkins_home3   repositories.json
+ commanddec24-1.txt                         jul1            spring-petclinic
+ day2                                       jun10           ubuntu-nginx
+ docker-compose.yml                         jun15           us-mar11
+ feb11                                      jun24           userjan11-csr.crt
+ feb25                                      mar11           userjan11.pem
+/c/Users/Dell lap/docker-workshop> cd -
+/c/Users/Dell lap/docker-workshop/jul1/app
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> ls
+Dockerfile  mypage.html
+/c/Users/Dell lap/docker-workshop/jul1/app> vi Dockerfile
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image build -t app:3 -t app:latest  .
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM alpine:3.10
+ ---> 4d90542f0623
+Step 2/5 : RUN apk update
+ ---> Using cache
+ ---> 70ef00892a1b
+Step 3/5 : RUN apk add apache2
+ ---> Using cache
+ ---> d8a6e8619b29
+Step 4/5 : CMD httpd -D FOREGROUND
+ ---> Using cache
+ ---> 3f12f36e62cc
+Step 5/5 : COPY mypage1.html /var/www/localhost/htdocs
+COPY failed: stat /var/lib/docker/tmp/docker-builder306118561/mypage1.html: no such file or directory
+/c/Users/Dell lap/docker-workshop/jul1/app>
+/c/Users/Dell lap/docker-workshop/jul1/app> docker image build -t app:3 -t app:latest
+"docker image build" requires exactly 1 argument.
+See 'docker image build --help'.
+
+Usage:  docker image build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+/c/Users/Dell lap/docker-workshop/jul1/app> cd ..
+/c/Users/Dell lap/docker-workshop/jul1> docker image build -t app:3 -t app:latest app
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM alpine:3.10
+ ---> 4d90542f0623
+Step 2/5 : RUN apk update
+ ---> Using cache
+ ---> 70ef00892a1b
+Step 3/5 : RUN apk add apache2
+ ---> Using cache
+ ---> d8a6e8619b29
+Step 4/5 : CMD httpd -D FOREGROUND
+ ---> Using cache
+ ---> 3f12f36e62cc
+Step 5/5 : COPY mypage1.html /var/www/localhost/htdocs
+COPY failed: stat /var/lib/docker/tmp/docker-builder350591116/mypage1.html: no such file or directory
+/c/Users/Dell lap/docker-workshop/jul1> docker image build -t app:3 -t app:latest "/c/Users/Dell lap/docker-workshop/jul1/app"
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM alpine:3.10
+ ---> 4d90542f0623
+Step 2/5 : RUN apk update
+ ---> Using cache
+ ---> 70ef00892a1b
+Step 3/5 : RUN apk add apache2
+ ---> Using cache
+ ---> d8a6e8619b29
+Step 4/5 : CMD httpd -D FOREGROUND
+ ---> Using cache
+ ---> 3f12f36e62cc
+Step 5/5 : COPY mypage1.html /var/www/localhost/htdocs
+COPY failed: stat /var/lib/docker/tmp/docker-builder894822011/mypage1.html: no such file or directory
+/c/Users/Dell lap/docker-workshop/jul1> vi app/Dockerfile
+/c/Users/Dell lap/docker-workshop/jul1> docker image build -t app:3 -t app:latest "/c/Users/Dell lap/docker-workshop/jul1/app"
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM alpine:3.10
+ ---> 4d90542f0623
+Step 2/5 : RUN apk update
+ ---> Using cache
+ ---> 70ef00892a1b
+Step 3/5 : RUN apk add apache2
+ ---> Using cache
+ ---> d8a6e8619b29
+Step 4/5 : CMD httpd -D FOREGROUND
+ ---> Using cache
+ ---> 3f12f36e62cc
+Step 5/5 : COPY mypage.html /var/www/localhost/htdocs
+ ---> Using cache
+ ---> 22af0e37d83e
+Successfully built 22af0e37d83e
+Successfully tagged app:3
+Successfully tagged app:latest
+/c/Users/Dell lap/docker-workshop/jul1>
+/c/Users/Dell lap/docker-workshop/jul1> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+/c/Users/Dell lap/docker-workshop/jul1> docker container run -p9090:80 -d app
+b1c740f35051c6361d057656504b99676be7f6f528744975bdaf15a5b8801171
+/c/Users/Dell lap/docker-workshop/jul1> docker container exec -it b1c740f3
+"docker container exec" requires at least 2 arguments.
+See 'docker container exec --help'.
+
+Usage:  docker container exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+Run a command in a running container
+/c/Users/Dell lap/docker-workshop/jul1> docker container exec -it b1c740f3 sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 httpd -D FOREGROUND
+    6 apache    0:00 httpd -D FOREGROUND
+    7 apache    0:00 httpd -D FOREGROUND
+    8 apache    0:00 httpd -D FOREGROUND
+    9 apache    0:00 httpd -D FOREGROUND
+   10 apache    0:00 httpd -D FOREGROUND
+   11 root      0:00 sh
+   15 root      0:00 ps
+/c/Users/Dell lap/docker-workshop/jul1>

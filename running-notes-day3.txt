@@ -332,3 +332,474 @@ helloworld-controller-pdrks   1/1     Running   0          2m8s   app=helloworld
 
 Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
 λ
+
+
+
+--------------------------------------------------------------------------------------
+
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl get pods
+NAME                              READY   STAT
+helloworld-dep-5cdb68cc76-5l57z   1/1     Runn
+helloworld-dep-5cdb68cc76-644ql   1/1     Runn
+helloworld-dep-5cdb68cc76-7w5nn   1/1     Runn
+helloworld-dep-5cdb68cc76-964j2   1/1     Runn
+helloworld-dep-5cdb68cc76-9xw8j   1/1     Runn
+helloworld-dep-5cdb68cc76-bpjsb   1/1     Runn
+helloworld-dep-5cdb68cc76-f678q   1/1     Runn
+helloworld-dep-5cdb68cc76-kthvb   1/1     Runn
+helloworld-dep-5cdb68cc76-m5q7g   1/1     Runn
+helloworld-dep-5cdb68cc76-zprfx   1/1     Runn
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl set image deploy helloworld-dep web=
+deployment.extensions/helloworld-dep image upd
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout status deploy helloworld-dep
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+dated...
+Waiting for deployment "helloworld-dep" rollou
+n...
+Waiting for deployment "helloworld-dep" rollou
+n...
+Waiting for deployment "helloworld-dep" rollou
+n...
+Waiting for deployment "helloworld-dep" rollou
+e...
+deployment "helloworld-dep" successfully rolle
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout status deploy helloworld-dep
+deployment "helloworld-dep" successfully rolle
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout status deploy helloworld-dep
+error: desired revision (1) is different from
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep with revi
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=1786247732
+  Containers:
+   web:
+    Image:      nginx:alpine
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep with revi
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=3620671180
+  Containers:
+   web:
+    Image:      nginx:latest
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout undo deploy helloworld-dep -
+deployment.extensions/helloworld-dep rolled ba
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+2         <none>
+3         <none>
+
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl get pods
+NAME                              READY   STAT
+helloworld-dep-5cdb68cc76-5jkcm   1/1     Runn
+helloworld-dep-5cdb68cc76-7ggx5   1/1     Runn
+helloworld-dep-5cdb68cc76-7tq52   1/1     Runn
+helloworld-dep-5cdb68cc76-8rx86   1/1     Runn
+helloworld-dep-5cdb68cc76-9smx8   1/1     Runn
+helloworld-dep-5cdb68cc76-brl6f   1/1     Runn
+helloworld-dep-5cdb68cc76-cwgq5   1/1     Runn
+helloworld-dep-5cdb68cc76-kdmcx   1/1     Runn
+helloworld-dep-5cdb68cc76-ltzj8   1/1     Runn
+helloworld-dep-5cdb68cc76-ml4kg   1/1     Runn
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl scale deploy helloworld-dep --replic
+deployment.extensions/helloworld-dep scaled
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl get pods -o wide
+NAME                              READY   STAT
+MINATED NODE   READINESS GATES
+helloworld-dep-5cdb68cc76-kdmcx   1/1     Runn
+one>           <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl apply -f service/svc-helloworld.yml
+service/hw-svc unchanged
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl describe svc hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.i
+                            {"apiVersion":"v1"
+me":"hw-svc","namespace":"default"},"spec":{"p
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.98.220.82
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.16:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl scale deploy helloworld-dep --replic
+deployment.extensions/helloworld-dep scaled
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl describe svc hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.i
+                            {"apiVersion":"v1"
+me":"hw-svc","namespace":"default"},"spec":{"p
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.98.220.82
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.14:80,172.1
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl get pods -o wide
+NAME                              READY   STAT
+NOMINATED NODE   READINESS GATES
+helloworld-dep-5cdb68cc76-kdmcx   1/1     Runn
+<none>           <none>
+helloworld-dep-5cdb68cc76-ljbbf   1/1     Runn
+<none>           <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ minikube ip
+192.168.99.154
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl set image deploy helloworld-dep web=
+deployment.extensions/helloworld-dep image upd
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl get pods -o wide
+NAME                             READY   STATU
+INATED NODE   READINESS GATES
+helloworld-dep-67ddfbbb4-pxb88   1/1     Runni
+ne>           <none>
+helloworld-dep-67ddfbbb4-z6g9v   1/1     Runni
+ne>           <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl describe svc hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.i
+                            {"apiVersion":"v1"
+me":"hw-svc","namespace":"default"},"spec":{"p
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.98.220.82
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.14:80,172.1
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ curl 192.168.99.154:31001
+<html><body><h1>It works!</h1></body></html>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl get pods -o wide
+NAME                             READY   STATU
+OMINATED NODE   READINESS GATES
+helloworld-dep-67ddfbbb4-pxb88   1/1     Runni
+none>           <none>
+helloworld-dep-67ddfbbb4-z6g9v   1/1     Runni
+none>           <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+λ kubectl exec -it helloworld-dep-67ddfbbb4-px
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 httpd -D FOREGROUND
+    7 apache    0:00 httpd -D FOREGROUND
+    8 apache    0:00 httpd -D FOREGROUND
+    9 apache    0:00 httpd -D FOREGROUND
+   10 apache    0:00 httpd -D FOREGROUND
+   11 apache    0:00 httpd -D FOREGROUND
+   12 root      0:00 sh
+   16 root      0:00 ps
+/ # curl
+sh: curl: not found
+/ # apk add curl
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.
+(1/4) Installing ca-certificates (20190108-r0)
+  0%
+    2%
+      4% #
+        5% ##
+          7% ###
+            9% ####
+             11% ####
+               12% #####
+                 13% ######
+                   15% ######
+                     16% #######
+                       18% #######
+                         19% ########
+                           20% #########
+                             22% #########
+                               23% ##########
+                                 25% #########
+#                                  27% #######
+####                                 28% #####
+######                                 29% ###
+#########                                31% #
+############                               32%
+##############                               3
+% ###############
+36% ################
+  38% ################
+    39% #################
+      40% ##################
+       (2/4) Installing nghttp2-libs (1.38.0-r
+ 46% ####################
+ 56% #########################
+ 85% #####################################
+##Executing busybox-1.30.1-r2.trigger
+Executing ca-certificates-20190108-r0.trigger
+OK: 11 MiB in 24 packages
+/ # curl localhost:80
+<html><body><h1>It works!</h1></body></html>
+/ # curl 192.168.99.154:31001
+<html><body><h1>It works!</h1></body></html>
+/ # curl 10.98.220.82:8888
+<html><body><h1>It works!</h1></body></html>
+/ # curl 10.98.220.82:8888
+<html><body><h1>It works!</h1></body></html>
+/ # curl 172.17.0.15:80
+<html><body><h1>It works!</h1></body></html>
+/ # curl hw-svc:8888
+<html><body><h1>It works!</h1></body></html>
+/ # cat /etc/resolv.conf
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.l
+ocal cluster.local
+options ndots:5
+/ # nslookup hw-svc
+nslookup: can't resolve '(null)': Name does no
+t resolve
+
+Name:      hw-svc
+Address 1: 10.98.220.82 hw-svc.default.svc.clu
+ster.local
+/ # ping google.com
+PING google.com (172.217.163.110): 56 data byt
+es
+64 bytes from 172.217.163.110: seq=0 ttl=52 ti
+me=41.675 ms
+64 bytes from 172.217.163.110: seq=1 ttl=52 ti
+me=52.064 ms
+^C
+--- google.com ping statistics ---
+2 packets transmitted, 2 packets received, 0%
+packet loss
+round-trip min/avg/max = 41.675/46.869/52.064
+ms
+/ #
+/ # exit
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-
+dock-kube/k8s (master)
+λ
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-db.yml
+deployment.extensions/blog-db-dep created
+service/blog-db-svc configured
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl delete svc blog-db-svc
+service "blog-db-svc" deleted
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-db.yml
+deployment.extensions/blog-db-dep unchanged
+service/blog-db-svc created
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+blog-db-dep-6958f95784-xhlmr     1/1     Running   0          58s
+helloworld-dep-67ddfbbb4-pxb88   1/1     Running   0          90m
+helloworld-dep-67ddfbbb4-z6g9v   1/1     Running   0          90m
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                             READY   STATUS    RESTARTS   AGE    IP            NODE       NOMINATED NODE   READINESS GATES
+blog-db-dep-6958f95784-xhlmr     1/1     Running   0          112s   172.17.0.16   minikube   <none>           <none>
+helloworld-dep-67ddfbbb4-pxb88   1/1     Running   0          91m    172.17.0.14   minikube   <none>           <none>
+helloworld-dep-67ddfbbb4-z6g9v   1/1     Running   0          91m    172.17.0.15   minikube   <none>           <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl describe svc blog-db-svc
+Name:              blog-db-svc
+Namespace:         default
+Labels:            <none>
+Annotations:       kubectl.kubernetes.io/last-applied-configuration:
+                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-db-svc","namespace":"default"},"spec":{"ports":[{"port":8888...
+Selector:          blog=db
+Type:              ClusterIP
+IP:                10.99.78.62
+Port:              <unset>  8888/TCP
+TargetPort:        dbport/TCP
+Endpoints:         172.17.0.16:3306
+Session Affinity:  None
+Events:            <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl delete svc blog-ghost-svc
+service "blog-ghost-svc" deleted
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-ghost.yml
+service/blog-ghost-svc created
+Error from server (BadRequest): error when creating "blog/blog-ghost.yml": Deployment in version "v1beta1" cannot be handled as a Deployment: v1beta1.Deployment: Spec: v1beta1.DeploymentSpec: Template: v1.PodTemplateSpec: Spec: v1.PodSpec: Containers: []v1.Container: v1.Container: Env: []v1.EnvVar: v1.EnvVar: Value: ReadString: expects " or n, parsing 1169 ...,"value":8... at {"apiVersion":"extensions/v1beta1","kind":"Deployment","metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"blog-ghost-dep\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"template\":{\"metadata\":{\"labels\":{\"blog\":\"ghost\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"database__client\",\"value\":\"mysql\"},{\"name\":\"database__connection__host\",\"value\":\"blog-db-svc\"},{\"name\":\"database__connection__port\",\"value\":8888},{\"name\":\"database__connection__user\",\"value\":\"root\"},{\"name\":\"database__connection__password\",\"value\":\"welcome1\"}],\"image\":\"ghost:1-alpine\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"ghost\",\"ports\":[{\"containerPort\":2368,\"name\":\"ghostport\"}]}]}}}}\n"},"name":"blog-ghost-dep","namespace":"default"},"spec":{"replicas":1,"template":{"metadata":{"labels":{"blog":"ghost"}},"spec":{"containers":[{"env":[{"name":"database__client","value":"mysql"},{"name":"database__connection__host","value":"blog-db-svc"},{"name":"database__connection__port","value":8888},{"name":"database__connection__user","value":"root"},{"name":"database__connection__password","value":"welcome1"}],"image":"ghost:1-alpine","imagePullPolicy":"IfNotPresent","name":"ghost","ports":[{"containerPort":2368,"name":"ghostport"}]}]}}}}
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl describe service/blog-ghost-svc
+Name:                     blog-ghost-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-ghost-svc","namespace":"default"},"spec":{"ports":[{"nodePor...
+Selector:                 blog=ghost
+Type:                     NodePort
+IP:                       10.96.226.45
+Port:                     <unset>  8888/TCP
+TargetPort:               ghostport/TCP
+NodePort:                 <unset>  32023/TCP
+Endpoints:                <none>
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-ghost.yml
+error: error parsing blog/blog-ghost.yml: error converting YAML to JSON: yaml: line 25: did not find expected key
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ vi blog/blog-ghost.yml
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-ghost.yml
+deployment.extensions/blog-ghost-dep created
+service/blog-ghost-svc unchanged
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                              READY   STATUS    RESTARTS   AGE    IP            NODE       NOMINATED NODE   READINESS GATES
+blog-db-dep-6958f95784-xhlmr      1/1     Running   0          15m    172.17.0.16   minikube   <none>           <none>
+blog-ghost-dep-754c44fc44-7xq6x   1/1     Running   0          5m4s   172.17.0.17   minikube   <none>           <none>
+helloworld-dep-67ddfbbb4-pxb88    1/1     Running   0          105m   172.17.0.14   minikube   <none>           <none>
+helloworld-dep-67ddfbbb4-z6g9v    1/1     Running   0          105m   172.17.0.15   minikube   <none>           <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ kubectl describe service/blog-ghost-svc
+Name:                     blog-ghost-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-ghost-svc","namespace":"default"},"spec":{"ports":[{"nodePor...
+Selector:                 blog=ghost
+Type:                     NodePort
+IP:                       10.96.226.45
+Port:                     <unset>  8888/TCP
+TargetPort:               ghostport/TCP
+NodePort:                 <unset>  32023/TCP
+Endpoints:                172.17.0.17:2368
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+Dell lap@Dell ~/docker-workshop/jul1/ora-jul1-dock-kube/k8s (master)
+λ

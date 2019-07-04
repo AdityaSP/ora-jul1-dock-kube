@@ -1,0 +1,14 @@
+kubectl config get-contexts                             List the context
+kubectl config use-context <context name>               Switch the context
+kubectl apply -f <yml file>                             Create/reconfigure resource
+kubectl delete -f <yml file>                            Delete a resource
+kubectl delete <rsource type> <resource name>           Delete a resource
+kubectl delete pod my-nginx     
+
+kubectl scale rc <rc name> --replicas 5                 Scale a rc
+kubectl scale deploy <dep name> --replicas 5            Scale a deployment
+
+kubectl rollout history deploy <dep name>               List the history
+kubectl rollout history deploy <dep name> --revision 1  More details about a ver
+kubectl rollout status deploy <dep name>                status of rollout
+kubectl rollout undo deploy <dep name> --to-revision 1  rollback to a version

@@ -1,0 +1,9 @@
+New Item -> give a job name -> freestyle project
+
+docker image build -t adityaprabhakara/jul5app:$BUILD_NUMBER .;
+docker login -u adityaprabhakara -p <DOCKER PASSWORD>;
+docker image push adityaprabhakara/jul5app:$BUILD_NUMBER;
+sed -i "s/DOCKERUSER/adityaprabhakara/g" dep.yml;
+sed -i "s/IMAGENAME/jul5app/g" dep.yml;
+sed -i "s/BUILDNUMBER/$BUILD_NUMBER/g" dep.yml;
+kubectl apply -f dep.yml;
